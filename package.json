@@ -1,0 +1,28 @@
+{
+  "name": "js-katas",
+  "version": "0.0.1",
+  "description": "JavaScript Katas that can be run locally to learn on your own pace",
+  "scripts": {
+    "test": "func() { mocha -r esm \"$1\"/{**,**/**}/*.js --require=mocha-require.js -R progress; }; func",
+    "test:katas": "npm run test:libraries && npm run test:language",
+    "test:language": "npm run test language",
+    "test:learn-by-rewriting": "npm run test learn-by-rewriting",
+    "test:libraries": "npm run test libraries"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tddbin/katas.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tddbin/katas/issues"
+  },
+  "homepage": "https://jskatas.org",
+  "devDependencies": {
+    "hamjest": "^3.1.0",
+    "hamjest-spy": "4.0.0",
+    "mocha": "^2.2.5",
+  },
+  "dependencies": {}
+}
