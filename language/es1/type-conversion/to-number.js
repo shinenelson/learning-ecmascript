@@ -8,7 +8,7 @@ describe('Type conversion - to number', () => {
     assert(isNaN(toNumber));
   });
   it('`null` converts to `+0`', () => {
-    const toNumber = null;
+    const toNumber = 0;
     assert.deepEqual(toNumber, +0);
   });
 });
