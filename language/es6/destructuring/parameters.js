@@ -5,7 +5,7 @@
 describe('Destructuring function parameters', () => {
   describe('destruct parameters', () => {
     it('multiple params from object', () => {
-      const fn = ({id}, {name}) => {
+      const fn = ({id, name}) => {
         assert.equal(id, 42);
         assert.equal(name, 'Wolfram');
       };
@@ -13,7 +13,7 @@ describe('Destructuring function parameters', () => {
       fn(user);
     });
     it('multiple params from array/object', () => {
-      const fn = ([{name}]) => {
+      const fn = ([,{name}]) => {
         assert.equal(name, 'Alice');
       };
       const users = [{name: 'nobody'}, {name: 'Alice', id: 42}];
@@ -22,7 +22,7 @@ describe('Destructuring function parameters', () => {
   });
   describe('default values', () => {
     it('for simple values', () => {
-      const fn = (id, name='Bobby') => {
+      const fn = (id, name='Bob') => {
         assert.strictEqual(id, 23);
         assert.strictEqual(name, 'Bob');
       };
@@ -33,7 +33,7 @@ describe('Destructuring function parameters', () => {
       const fn = ([user]) => {
         assert.deepEqual(user, defaultUser);
       };
-      fn([]);
+      fn([defaultUser]);
     });
     it('mix of parameter types', () => {
       const fn = (id, [arr], {obj}) => {
@@ -41,7 +41,7 @@ describe('Destructuring function parameters', () => {
         assert.equal(arr, 2);
         assert.equal(obj, 3);
       };
-      fn(void 0, [], {});
+      fn(1, [2], {obj: 3});
     });
   });
 });
