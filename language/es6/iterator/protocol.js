@@ -11,12 +11,23 @@ describe('A simple iterable without items inside, implementing the right protoco
 
   describe('the `iteratorFunction` needs to comply to the iterator protocol', function() {
     it('must return an object', function() {
+      iteratorFunction = () => { return {} };
       assert.equal(typeof iteratorFunction(), 'object');
     });
     it('the object must have a function assigned to a key `next`', function() {
+      iteratorFunction = () => {
+        return {
+          next: () => {}
+        };
+      };
       assert.equal(typeof iteratorFunction().next, 'function');
     });
     it('calling `next()` must return an object with `{done: true}`', function() {
+      iteratorFunction = () => {
+        return {
+          next: () => { return {done: true} }
+        };
+      };
       assert.deepEqual(iteratorFunction().next(), {done: true});
     });
   });
@@ -28,31 +39,36 @@ describe('A simple iterable without items inside, implementing the right protoco
 
   describe('the iterable', function() {
     it('must be an object', function() {
+      iterable = {};
       assert.equal(typeof iterable, 'object');
     });
     it('must have the iterator function assigned to the key `Symbol.iterator`', function() {
+      iterable = {
+        [Symbol.iterator]: iteratorFunction
+      };
+console.log(iterable[Symbol.iterator]);
       assert.equal(iterable[Symbol.iterator], iteratorFunction);
     });
   });
   describe('using the iterable', function() {
     it('it contains no values', function() {
-      let values;
+      let values = '';
       for (let value of iterable) {
         values += value;
       }
       assert.equal(values, '');
     });
     it('has no `.length` property', function() {
-      const hasLengthProperty = iterable;
+      const hasLengthProperty = 'length' in iterable;
       assert.equal(hasLengthProperty, false);
     });
     describe('can be converted to an array', function() {
       it('using `Array.from()`', function() {
-        const arr = iterable;
+        const arr = Array.from(iterable);
         assert.equal(Array.isArray(arr), true);
       });
       it('where `.length` is still 0', function() {
-        const arr = iterable;
+        const arr = Array.from(iterable);
         const length = arr.length;
         assert.equal(length, 0);
       });
