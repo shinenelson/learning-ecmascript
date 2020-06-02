@@ -3,18 +3,18 @@
 
 describe('`Reflect.apply` calls a target function', function() {
   it('it is a static method', function() {
-    const expectedType = '???';
+    const expectedType = 'function';
     assert.equal(typeof Reflect.apply, expectedType)
   });
 
   describe('the 1st parameter', () => {
     it('is a callable, e.g. a function', () => {
-      let fn;
+      function fn() { return 42 };
       assert.equal(Reflect.apply(fn, void 0, []), 42);
     });
     it('passing it a non-callable throws a TypeError', function() {
       const applyOnUncallable = () =>
-        Reflect.apply(() => {}, void 0, []);
+        Reflect.apply(null, void 0, []);
       assert.throws(applyOnUncallable, TypeError);
     });
   });
@@ -26,7 +26,7 @@ describe('`Reflect.apply` calls a target function', function() {
         fn() {return this.value}
       }
       let instance = new FourtyTwo();
-      const fourtyTwo = Reflect.apply(instance.fn, ___, []);
+      const fourtyTwo = Reflect.apply(instance.fn, instance, []);
       assert.deepEqual(fourtyTwo, 42);
     });
   });
@@ -34,21 +34,21 @@ describe('`Reflect.apply` calls a target function', function() {
   describe('the 3rd parameter', () => {
     it('must be an array (or array-like)', () => {
       const thirdParam = 'should be array-like';
-      assert.doesNotThrow(() => Reflect.apply(() => void 0, null, thirdParam));
+      assert.doesNotThrow(() => Reflect.apply(() => void 0, null, []));
     });
     it('is an array of parameters passed to the call', function() {
-      let emptyArrayWithFiveElements = Reflect.apply(Array);
+      let emptyArrayWithFiveElements = Reflect.apply(Array, null, [5]);
       assert.deepEqual(emptyArrayWithFiveElements.fill(42), [42, 42, 42, 42, 42]);
     });
   });
 
   describe('example usages', () => {
     it('simple function call', () => {
-      const fn = () => ':(';
+      const fn = () => 'the return value';
       assert.equal(Reflect.apply(fn, void 0, []), 'the return value');
     });
     it('call a function on an array', () => {
-      const fn = [].join;
+      const fn = [].slice;
       assert.deepEqual(Reflect.apply(fn, [0, 23, 42], [1]), [23, 42]);
     });
     it('pass in the `this` that the function to call needs', () => {
@@ -57,7 +57,7 @@ describe('`Reflect.apply` calls a target function', function() {
         name() { return this._name; }
       }
       const bob = new Bob();
-      const scope = Bob;
+      const scope = bob;
       assert.equal(Reflect.apply(bob.name, scope, []), 'Bob');
     });
   });
