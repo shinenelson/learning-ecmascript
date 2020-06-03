@@ -26,11 +26,23 @@
   Link to docs https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexof
 */
 
-function indexOf(/*function parameters*/) {
-  
-  /*
-    Your code goes here
-  */
+function indexOf(array, searchElement, fromIndex=0) {
+/*
+  guideline recommended to _avoid using other array methods_
+  if( !Array.isArray(array) ) {
+    throw new TypeError('first argument is not an array');
+  }
+*/
+  if(typeof array[Symbol.iterator] !== 'function') {
+    throw new TypeError('first argument is not an iterable');
+  }
+  if( !isFinite(fromIndex) ) {
+    fromIndex = 0
+  }
+  for ( let index = fromIndex; index <= array.length; index++  ) {
+    if( array[index] === searchElement) return index;
+  }
+  return -1;
 }
 
 describe("Implementing the `indexOf()` array method", () => {
