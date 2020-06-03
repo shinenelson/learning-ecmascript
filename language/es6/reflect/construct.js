@@ -70,6 +70,7 @@ describe('`Reflect.construct` is the `new` operator as a function', function() {
   describe('the length property', function() {
     it('of `Reflect.construct` is 2', function() {
       let expected = 2;
+console.log(Reflect.construct.length);
       assert.equal(Reflect.construct.length, expected);
     });
   });
