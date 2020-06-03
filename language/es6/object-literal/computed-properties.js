@@ -23,11 +23,9 @@ describe('Object literal properties may be computed values', () => {
     const obj = {['proper' + what]: null};
     assert('propertyName' in obj);
   });
-  // can't solve this one
   it('accessor keys can be computed names too', () => {
     const obj = {
-      set ['key'](_) {return 1},
-      
+      get ['key']() {return 1},
     };
     assert.equal(obj.key, 1);
   });
