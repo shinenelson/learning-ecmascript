@@ -33,7 +33,7 @@ describe('Iterator usages', () => {
         }
       }
     }
-    usersIterable = { [Symbol.iterator]: () => iteratorFunction() };
+    usersIterable = { [Symbol.iterator]: iteratorFunction };
   });
   
   describe('create an iterator/iterable', function() {
