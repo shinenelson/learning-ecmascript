@@ -36,10 +36,13 @@ function indexOf(array, searchElement, fromIndex=0) {
   if(typeof array[Symbol.iterator] !== 'function') {
     throw new TypeError('first argument is not an iterable');
   }
-  if( !isFinite(fromIndex) ) {
+  if( !parseInt(fromIndex) ) {
     fromIndex = 0
   }
-  for ( let index = fromIndex; index <= array.length; index++  ) {
+  if( !searchElement ) return -1;
+  let index = fromIndex;
+  if( fromIndex < 0 ) { index = array.length + fromIndex }
+  for ( ; index <= array.length; index++  ) {
     if( array[index] === searchElement) return index;
   }
   return -1;
